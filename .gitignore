@@ -1,0 +1,12 @@
+.DS_Store
+*.vs/
+node_modules/
+npm-debug.log
+*.vs/*
+.env
+.vscode/
+.eslintrc.json
+.history
+*lock.json
+*error.log
+package-lock.json
