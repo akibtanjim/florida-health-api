@@ -18,7 +18,7 @@ const statusCodes = {
   NOT_IMPLEMENTED: 501,
   BAD_GATEWAY: 502,
   SERVICE_UNAVAILABLE: 503,
-  GATEWAY_TIME_OUT: 504
+  GATEWAY_TIME_OUT: 504,
 };
 
 function responseHandler() {
@@ -31,18 +31,18 @@ function responseHandler() {
       ctx.body = { status: "success", data, message };
     };
 
-    ctx.response.fail = (data = null, errors = null) => {
+    ctx.response.fail = (data = null, errors = null, message = null) => {
       ctx.status =
         ctx.status >= 400 && ctx.status < 500
           ? ctx.status
           : statusCodes.BAD_REQUEST;
-      ctx.body = { status: "fail", data, errors };
+      ctx.body = { status: "fail", data, errors, message };
     };
 
-    ctx.response.error = (code = null, errors = null) => {
+    ctx.response.error = (data = null, errors = null, message) => {
       ctx.status =
         ctx.status < 500 ? statusCodes.INTERNAL_SERVER_ERROR : ctx.status;
-      ctx.body = { status: "error", code, errors };
+      ctx.body = { status: "fail", data, errors, message };
     };
 
     ctx.response.ok = (data, message) => {
@@ -65,38 +65,38 @@ function responseHandler() {
       ctx.response.success(data, message);
     };
 
-    ctx.response.badRequest = (data, message) => {
+    ctx.response.badRequest = (data, errors, message) => {
       ctx.status = statusCodes.BAD_REQUEST;
-      ctx.response.fail(data, message);
+      ctx.response.fail(data, errors, message);
     };
 
-    ctx.response.unauthorized = (data, message) => {
+    ctx.response.unauthorized = (data, errors, message) => {
       ctx.status = statusCodes.UNAUTHORIZED;
-      ctx.response.fail(data, message);
+      ctx.response.fail(data, errors, message);
     };
 
-    ctx.response.forbidden = (data, message) => {
+    ctx.response.forbidden = (data, errors, message) => {
       ctx.status = statusCodes.FORBIDDEN;
-      ctx.response.fail(data, message);
+      ctx.response.fail(data, errors, message);
     };
 
-    ctx.response.notFound = (data, message) => {
+    ctx.response.notFound = (data, errors, message) => {
       ctx.status = statusCodes.NOT_FOUND;
-      ctx.response.fail(data, message);
+      ctx.response.fail(data, errors, message);
     };
 
-    ctx.response.internalServerError = (code, message) => {
+    ctx.response.internalServerError = (data, errors, message) => {
       ctx.status = statusCodes.INTERNAL_SERVER_ERROR;
-      ctx.response.error(code, message);
+      ctx.response.error(data, errors, message);
     };
 
-    ctx.response.notImplemented = (code, message) => {
+    ctx.response.notImplemented = (data, errors, message) => {
       ctx.status = statusCodes.NOT_IMPLEMENTED;
-      ctx.response.error(code, message);
+      ctx.response.error(data, errors, message);
     };
-    ctx.response.serviceUnavailable = (code, message) => {
+    ctx.response.serviceUnavailable = (data, errors, message) => {
       ctx.status = statusCodes.SERVICE_UNAVAILABLE;
-      ctx.response.error(code, message);
+      ctx.response.error(data, errors, message);
     };
     await next();
   };

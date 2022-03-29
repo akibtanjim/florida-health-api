@@ -22,6 +22,12 @@ module.exports = (sequelize, { DataTypes }) => {
            isAlpha: true
        }
     },
+    state: {
+       type: DataTypes.STRING, allowNull: false, defaultValue: '',
+       validate: {
+           isAlpha: true
+       }
+    },
     zip: {
        type: DataTypes.STRING, allowNull: false, defaultValue: '',
        validate: {
@@ -54,11 +60,12 @@ module.exports = (sequelize, { DataTypes }) => {
     },
     capacity: {
        type: DataTypes.JSON, allowNull: false, defaultValue: ''
-    },
+    }
   }, {
     sequelize,
     timestamps: true,
     modelName: 'facility',
+    indexes: [ { unique: true, fields: [ 'name', 'city', 'state' ] } ] ,
   });
   return Facility;
 };

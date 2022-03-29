@@ -10,7 +10,10 @@ const responseHandler = require("./middlewares/responseHandler");
 const router = require("./routes");
 const koaBody = require("koa-body");
 const db = require("./models");
-// db.sequelize.sync();
+const errorResponseHandler = require("./helpers/errorHandler");
+if (process.env.NODE_ENV === "development") {
+  db.sequelize.sync();
+}
 
 const app = new Koa();
 
@@ -19,6 +22,28 @@ app.use(requestId());
 app.use(logMiddleware({ logger }));
 app.use(cors({ origin: "*" }));
 app.use(responseHandler());
+app.use(async (ctx, next) => {
+  try {
+    await next();
+    const status = ctx.status || 404;
+    if (status === 404) {
+      return errorResponseHandler(ctx, {
+        status: 404,
+        title: "Not found",
+        message: "Requested Route Not Found",
+      });
+    }
+  } catch (err) {
+    ctx.status = err.status;
+    if (ctx.status === 404) {
+      return errorResponseHandler(ctx, {
+        status: 404,
+        title: "Not found",
+        message: "Requested Route Not Found",
+      });
+    }
+  }
+});
 app
   .use(router.routes.routers.routes())
   .use(router.routes.routers.allowedMethods());

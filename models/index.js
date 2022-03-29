@@ -21,8 +21,8 @@ const sequelize = new Sequelize(
             acquire: dbConfig.pool.acquire,
             idle: dbConfig.pool.idle
         },
-        operatorsAliases: false,
-        logging: false
+        operatorsAliases: process.env.NODE_ENV === 'development',
+        logging: process.env.NODE_ENV === 'development'
     }
 );
 
