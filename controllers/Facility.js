@@ -24,6 +24,7 @@ const FacilityController = {
         city,
         providerType,
         storeData = false,
+        images = [],
       } = ctx.request.body;
       const mappedState = state
         ? variables.stateMapper[state.toLowerCase()]
@@ -34,6 +35,7 @@ const FacilityController = {
         city,
         providerType,
         storeData,
+        images,
       });
       ctx.response.ok(response, "Faclities Searched Successfully!");
     } catch (error) {

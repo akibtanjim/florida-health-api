@@ -3,7 +3,7 @@ const env = process.env.APP_ENV || "local";
 const appPort = process.env.APP_PORT;
 const logLevel = process.env.LOG_LEVEL;
 const host = process.env.HOST || "localhost";
-const appSecret = process.env.APP_SECRET;
+const bucketName = process.env.AWS_BUCKET_NAME;
 const stateMapper = {
   florida: "FL",
 };
@@ -14,8 +14,8 @@ const variables = {
   loggerName,
   logLevel,
   host,
-  appSecret,
   stateMapper,
+  bucketName,
 };
 
 module.exports = variables;
