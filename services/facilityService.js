@@ -36,7 +36,7 @@ const searchFacilities = async ({
       providerType,
     }).catch(error => console.log(error));
     if (storeData && response?.length) {
-      const qqq = await Promise.all(
+      const uploadedImages = await Promise.all(
         images.map(async image => {
           const s3Response = await uploadFile(image)
             .then(({ ETag, Location, Key, Bucket }) => {
@@ -55,7 +55,7 @@ const searchFacilities = async ({
       );
       response = response.map(item => ({
         ...item,
-        images: qqq.filter(element => {
+        images: uploadedImages.filter(element => {
           return Object.keys(element).length > 0;
         }),
       }));
