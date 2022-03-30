@@ -26,7 +26,7 @@ app.use(async (ctx, next) => {
   try {
     await next();
     const status = ctx.status || 404;
-    if (status === 404) {
+    if (status === 404 && ctx?.body?.message !== "Resource not found") {
       return errorResponseHandler(ctx, {
         status: 404,
         title: "Not found",
@@ -35,7 +35,7 @@ app.use(async (ctx, next) => {
     }
   } catch (err) {
     ctx.status = err.status;
-    if (ctx.status === 404) {
+    if (ctx.status === 404 && ctx?.body?.message !== "Resource not found") {
       return errorResponseHandler(ctx, {
         status: 404,
         title: "Not found",

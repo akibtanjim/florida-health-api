@@ -9,6 +9,9 @@ const rules = {
     images: "required_if:images,|array|isArray",
     "images.*": "required_if:images.*,|isBase64",
   },
+  details: {
+    slug: "required",
+  },
 };
 
 const messages = {

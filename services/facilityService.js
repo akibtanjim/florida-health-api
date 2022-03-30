@@ -25,6 +25,7 @@ const searchFacilities = async ({
       where: {
         [Op.or]: condtitions,
       },
+      order: [["id", "DESC"]],
     });
   }
 
@@ -67,7 +68,21 @@ const searchFacilities = async ({
   return response;
 };
 
+const getFacilityBySlug = async slug => {
+  return facilityModel.findOne({ where: { slug } }).then(response => {
+    if (!response) {
+      throw Object.assign({}, new Error(), {
+        status: 404,
+        title: "Not found",
+        message: "Resource not found",
+      });
+    }
+    return response;
+  });
+};
+
 module.exports = {
   getFacilities,
   searchFacilities,
+  getFacilityBySlug,
 };

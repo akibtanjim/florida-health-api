@@ -3,6 +3,7 @@ const errorResponseHandler = require("../helpers/errorHandler");
 const {
   getFacilities,
   searchFacilities,
+  getFacilityBySlug,
 } = require("../services/facilityService");
 const variables = require("../variables");
 
@@ -38,6 +39,15 @@ const FacilityController = {
         images,
       });
       ctx.response.ok(response, "Faclities Searched Successfully!");
+    } catch (error) {
+      errorResponseHandler(ctx, error);
+    }
+  },
+  getFacility: async ctx => {
+    try {
+      const { slug } = ctx.params;
+      const response = await getFacilityBySlug(slug);
+      ctx.response.ok(response, "Facility Details Fetched Successfully!");
     } catch (error) {
       errorResponseHandler(ctx, error);
     }

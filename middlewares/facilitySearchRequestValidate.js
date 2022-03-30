@@ -39,7 +39,7 @@ const facilitySearchRequestValidate = async (ctx, next) => {
             city: ["The city/name field is required for provider type all"],
           },
         },
-        message: "Invalid Parameter(s)",
+        message: "Invalid Parameter(s): name/city",
       });
     }
     const validation = await new Validator(
@@ -51,7 +51,9 @@ const facilitySearchRequestValidate = async (ctx, next) => {
       throw Object.assign({}, new Error(), {
         status: 400,
         data: { errors: validation.errors.all() },
-        message: "Invalid Parameter(s)",
+        message: `Invalid Parameter(s): ${Object.keys(validation.errors.all())
+          .map(item => item)
+          .join(",")}`,
       });
     }
     await next();
