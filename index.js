@@ -8,7 +8,7 @@ const logger = require("./logger");
 const requestId = require("./middlewares/requestId");
 const responseHandler = require("./middlewares/responseHandler");
 const router = require("./routes");
-const koaBody = require("koa-body");
+const koaBody = require("koa-bodyparser");
 const db = require("./models");
 const errorResponseHandler = require("./helpers/errorHandler");
 if (process.env.NODE_ENV === "development") {

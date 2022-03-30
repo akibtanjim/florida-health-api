@@ -4,6 +4,9 @@ const appPort = process.env.APP_PORT;
 const logLevel = process.env.LOG_LEVEL;
 const host = process.env.HOST || "localhost";
 const appSecret = process.env.APP_SECRET;
+const stateMapper = {
+  florida: "FL",
+};
 
 const variables = {
   appPort,
@@ -11,7 +14,8 @@ const variables = {
   loggerName,
   logLevel,
   host,
-  appSecret
+  appSecret,
+  stateMapper,
 };
 
 module.exports = variables;
