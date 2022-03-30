@@ -68,7 +68,14 @@ const prepareScrappedDataResponse = items => {
       values.forEach((val, i) => {
         obj[keyMapper(keysList[i])] = val;
       });
-      return obj;
+      return {
+        ...obj,
+        slug: obj.name
+          .toLowerCase()
+          .replace("-", " ")
+          .replace(/ /g, "-")
+          .replace(/[^\w-]+/g, ""),
+      };
     });
   }
   return [];

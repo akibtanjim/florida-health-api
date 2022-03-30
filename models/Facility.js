@@ -39,6 +39,12 @@ module.exports = (sequelize, { DataTypes }) => {
           isAlpha: true,
         },
       },
+      slug: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+        defaultValue: "-",
+      },
       city: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -105,19 +111,8 @@ module.exports = (sequelize, { DataTypes }) => {
       sequelize,
       timestamps: true,
       modelName: "facility",
-      indexes: [
-        {
-          name: "state_index",
-          using: "BTREE",
-          fields: ["state"],
-        },
-        {
-          name: "city_index",
-          using: "BTREE",
-          fields: ["city"],
-        },
-      ],
     }
   );
+
   return Facility;
 };
