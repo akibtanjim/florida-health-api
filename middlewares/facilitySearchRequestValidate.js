@@ -4,6 +4,7 @@ const { rules, messages } = require("../helpers/validation");
 Validator.registerImplicit(
   "isArray",
   value => {
+    if (value === undefined) return true;
     if (!Array.isArray(value)) {
       return false;
     }
@@ -15,7 +16,7 @@ Validator.registerImplicit(
 Validator.registerImplicit(
   "isBase64",
   value => {
-    return value.startsWith("data:image/");
+    return typeof value !== "object" && value.startsWith("data:image/");
   },
   "The image must be of base64"
 );
@@ -30,7 +31,12 @@ const facilitySearchRequestValidate = async (ctx, next) => {
       storeData = false,
       images,
     } = ctx.request.body;
-    if (String(providerType).toLowerCase() === "all" && !name && !city) {
+    if (
+      String(providerType).toLowerCase() === "all" &&
+      !name &&
+      !city &&
+      !state
+    ) {
       throw Object.assign({}, new Error(), {
         status: 400,
         data: {

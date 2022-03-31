@@ -45,6 +45,14 @@ module.exports = (sequelize, { DataTypes }) => {
         allowNull: false,
         defaultValue: "-",
       },
+      address: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: "",
+        validate: {
+          isAlpha: true,
+        },
+      },
       city: {
         type: DataTypes.STRING,
         allowNull: false,

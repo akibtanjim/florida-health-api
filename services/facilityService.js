@@ -43,10 +43,8 @@ const searchFacilities = async ({
             .then(({ ETag, Location, Key, Bucket }) => {
               return ETag || Location || Key || Bucket
                 ? {
-                    eTag: ETag,
                     location: Location,
                     key: Key,
-                    bucket: Bucket,
                   }
                 : {};
             })
