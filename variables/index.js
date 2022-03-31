@@ -6,6 +6,7 @@ const host = process.env.HOST || "localhost";
 const bucketName = process.env.AWS_BUCKET_NAME;
 const apiRateLimitInterval = process.env.API_RATE_LIMIT_INTERVAL_IN_MIN;
 const apiMaxRequestLimit = process.env.API_MAX_REQUEST_LIMIT;
+const cacheMaxAge = process.env.CACHE_MAX_AGE_IN_SEC;
 const stateMapper = {
   florida: "FL",
 };
@@ -20,6 +21,7 @@ const variables = {
   bucketName,
   apiRateLimitInterval,
   apiMaxRequestLimit,
+  cacheMaxAge,
 };
 
 module.exports = variables;

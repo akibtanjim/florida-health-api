@@ -49,6 +49,16 @@ app.use(async (ctx, next) => {
     }
   }
 });
+
+app.use(async (ctx, next) => {
+  await next().then(() => {
+    if (ctx.request.method === "GET") {
+      ctx.set("Cache-Control", `public,max-age=${variables.cacheMaxAge}`);
+    } else {
+      ctx.set("Cache-Control", `no-store`);
+    }
+  });
+});
 app
   .use(router.routes.routers.routes())
   .use(router.routes.routers.allowedMethods());
