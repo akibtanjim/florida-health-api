@@ -4,6 +4,8 @@ const appPort = process.env.APP_PORT;
 const logLevel = process.env.LOG_LEVEL;
 const host = process.env.HOST || "localhost";
 const bucketName = process.env.AWS_BUCKET_NAME;
+const apiRateLimitInterval = process.env.API_RATE_LIMIT_INTERVAL_IN_MIN;
+const apiMaxRequestLimit = process.env.API_MAX_REQUEST_LIMIT;
 const stateMapper = {
   florida: "FL",
 };
@@ -16,6 +18,8 @@ const variables = {
   host,
   stateMapper,
   bucketName,
+  apiRateLimitInterval,
+  apiMaxRequestLimit,
 };
 
 module.exports = variables;

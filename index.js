@@ -2,6 +2,7 @@ require("dotenv").config();
 
 const Koa = require("koa");
 const cors = require("koa2-cors");
+const RateLimit = require("koa2-ratelimit").RateLimit;
 const variables = require("./variables");
 const logMiddleware = require("./middlewares/log");
 const logger = require("./logger");
@@ -11,17 +12,21 @@ const router = require("./routes");
 const koaBody = require("koa-bodyparser");
 const db = require("./models");
 const errorResponseHandler = require("./helpers/errorHandler");
-if (process.env.NODE_ENV === "development") {
-  db.sequelize.sync();
-}
+
+db.sequelize.sync();
 
 const app = new Koa();
+const limiter = RateLimit.middleware({
+  interval: { min: variables.apiRateLimitInterval },
+  max: variables.apiMaxRequestLimit,
+});
 
 app.use(koaBody());
 app.use(requestId());
 app.use(logMiddleware({ logger }));
 app.use(cors({ origin: "*" }));
 app.use(responseHandler());
+app.use(limiter);
 app.use(async (ctx, next) => {
   try {
     await next();
