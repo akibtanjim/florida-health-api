@@ -3,6 +3,7 @@
   <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT_eimUX98YCqnw0tFLXbbCVkrGfZevLgMmhQ&usqp=CAU" alt="API" width="200">
   <br>
   <br>
+  <br>
 </h1>
 
 ## Florida Health Facility API
