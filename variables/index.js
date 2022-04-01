@@ -1,6 +1,6 @@
 const loggerName = process.env.LOGGER_NAME;
 const env = process.env.APP_ENV || "local";
-const appPort = process.env.APP_PORT;
+const appPort = process.env.APP_PORT || 3000;
 const logLevel = process.env.LOG_LEVEL;
 const host = process.env.HOST || "localhost";
 const bucketName = process.env.AWS_BUCKET_NAME;
